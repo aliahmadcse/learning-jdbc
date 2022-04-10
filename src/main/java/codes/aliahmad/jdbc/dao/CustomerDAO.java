@@ -1,5 +1,6 @@
-package codes.aliahmad.jdbc;
+package codes.aliahmad.jdbc.dao;
 
+import codes.aliahmad.jdbc.models.Customer;
 import codes.aliahmad.jdbc.util.DataAccessObject;
 
 import java.sql.Connection;

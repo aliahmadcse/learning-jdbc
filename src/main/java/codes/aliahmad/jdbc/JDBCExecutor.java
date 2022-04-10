@@ -1,9 +1,9 @@
 package codes.aliahmad.jdbc;
 
+import codes.aliahmad.jdbc.dao.CustomerDAO;
+
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class JDBCExecutor
 {
@@ -25,7 +25,8 @@ public class JDBCExecutor
 //      customer.setCity("New York");
 //      customer.setState("Washington DC");
 //      customer.setZipCode("12345");
-      customerDAO.delete(10000);
+//      customerDAO.delete(10000);
+      System.out.println(customerDAO.findById(100));
     }
     catch (SQLException sqlException)
     {

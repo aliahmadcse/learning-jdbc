@@ -1,9 +1,8 @@
-package codes.aliahmad.jdbc;
-
+package codes.aliahmad.jdbc.models;
 
 import codes.aliahmad.jdbc.util.DataTransferObject;
 
-public class Customer implements DataTransferObject
+public class SalesPerson implements DataTransferObject
 {
   private long id;
   private String firstName;
@@ -15,6 +14,7 @@ public class Customer implements DataTransferObject
   private String state;
   private String zipCode;
 
+  @Override
   public long getId()
   {
     return id;
@@ -108,7 +108,7 @@ public class Customer implements DataTransferObject
   @Override
   public String toString()
   {
-    return "Customer{" +
+    return "SalesPerson{" +
             "id=" + id +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
