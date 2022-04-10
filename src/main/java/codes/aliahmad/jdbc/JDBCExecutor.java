@@ -15,12 +15,17 @@ public class JDBCExecutor
     try
     {
       Connection connection = databaseConnectionManager.getConnection();
-      Statement statement = connection.createStatement();
-      ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM CUSTOMER");
-      while (resultSet.next())
-      {
-        System.out.println(resultSet.getInt(1));
-      }
+      CustomerDAO customerDAO = new CustomerDAO(connection);
+//      customer.setId(10000);
+//      customer.setFirstName("Zain");
+//      customer.setLastName("Ahmad");
+//      customer.setEmail("ali@gmail.com");
+//      customer.setPhone("9230232323");
+//      customer.setAddress("xyz");
+//      customer.setCity("New York");
+//      customer.setState("Washington DC");
+//      customer.setZipCode("12345");
+      customerDAO.delete(10000);
     }
     catch (SQLException sqlException)
     {

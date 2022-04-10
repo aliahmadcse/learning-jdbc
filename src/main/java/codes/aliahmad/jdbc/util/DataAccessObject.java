@@ -12,7 +12,7 @@ public abstract class DataAccessObject<T extends DataTransferObject>
   protected final static String LAST_VAL = "SELECT last_value FROM ";
   protected final static String CUSTOMER_SEQUENCE = "hp_customer_seq";
 
-  private DataAccessObject(Connection connection)
+  public DataAccessObject(Connection connection)
   {
     super();
     this.connection = connection;
