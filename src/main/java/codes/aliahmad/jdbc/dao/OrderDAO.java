@@ -24,6 +24,8 @@ public class OrderDAO extends DataAccessObject<Order>
           "join order_item ol on o.order_id = ol.order_id join product p on ol.product_id = p.product_id " +
           "where o.order_id = ?";
 
+  private static final String GET_FOR_CUST = "SELECT * FROM get_orders_by_customer(?)";
+
   public OrderDAO(Connection connection)
   {
     super(connection);
@@ -107,5 +109,64 @@ public class OrderDAO extends DataAccessObject<Order>
   public void delete(long id)
   {
 
+  }
+
+  public List<Order> getOrdersForCustomer(long customerId)
+  {
+    List<Order> orders = new ArrayList<>();
+    try (PreparedStatement preparedStatement = connection.prepareStatement(GET_FOR_CUST))
+    {
+      preparedStatement.setLong(1, customerId);
+      ResultSet resultSet = preparedStatement.executeQuery();
+      long orderId = 0;
+      Order order = null;
+      while (resultSet.next())
+      {
+        long localOrderId = resultSet.getLong(4);
+        if (orderId != localOrderId)
+        {
+          order = new Order();
+          orders.add(order);
+          order.setId(localOrderId);
+          orderId = localOrderId;
+//          customer data
+          Customer customer = new Customer();
+          order.setCustomer(customer);
+          customer.setFirstName(resultSet.getString(1));
+          customer.setLastName(resultSet.getString(2));
+          customer.setEmail(resultSet.getString(3));
+
+          order.setCreationDate(resultSet.getString(5));
+          order.setTotalDue(resultSet.getDouble(6));
+          order.setStatus(resultSet.getString(7));
+//          Sales person data
+          SalesPerson salesPerson = new SalesPerson();
+          order.setSalesPerson(salesPerson);
+          salesPerson.setFirstName(resultSet.getString(8));
+          salesPerson.setLastName(resultSet.getString(9));
+          salesPerson.setEmail(resultSet.getString(10));
+//          Order items details
+          List<OrderItem> orderItems = new ArrayList<>();
+          order.setOrderItemList(orderItems);
+        }
+        OrderItem orderItem = new OrderItem();
+        orderItem.setQuantity(resultSet.getInt(11));
+        Product product = new Product();
+        orderItem.setProduct(product);
+        product.setCode(resultSet.getString(12));
+        product.setName(resultSet.getString(13));
+        product.setSize(resultSet.getInt(14));
+        product.setVariety(resultSet.getString(15));
+        product.setPrice(resultSet.getDouble(16));
+        assert order != null;
+        order.getOrderItemList().add(orderItem);
+      }
+      return orders;
+    }
+    catch (SQLException sqlException)
+    {
+      sqlException.printStackTrace();
+      throw new RuntimeException(sqlException);
+    }
   }
 }
