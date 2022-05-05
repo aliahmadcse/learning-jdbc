@@ -35,7 +35,7 @@ Docker is installed psql client is installed
 4. `psql -h localhost -U postgres -d hplussport -f salesperson.sql`
 5. `psql -h localhost -U postgres -d hplussport -f orders.sql`
 
-### ### Creating starter data Using pgcli
+### Creating starter data Using pgcli
 
 1. `pgcli -h localhost -U postgres`
 2. Once you are into the server, run for each sql file in `resources/schema`, Run `\i filename.sql`
